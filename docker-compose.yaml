@@ -11,6 +11,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
 
   queue:
     image: large_file_backend
@@ -20,7 +22,7 @@ services:
 #      - myapp:/var/www/html/storage
     # for the queue worker, we use the same image, but run
     # artisan queue:work
-    entrypoint: php artisan queue:work
+    entrypoint: php /large-file/artisan queue:work
 
   server:
     container_name: nginx_app
@@ -31,6 +33,8 @@ services:
     volumes:
       - ./:/large-file
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
 
   db:
     image: mysql:8.0
@@ -45,6 +49,8 @@ services:
 #      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     ports:
       - 3310:3306
+    networks:
+      - app-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -58,10 +64,12 @@ services:
     restart: always
     ports:
       - 8081:80
+    networks:
+      - app-network
 
 
-#  soketi:
-#    image: quay.io/soketi/soketi:0.17-16-alpine
-#    ports:
-#      - 6001:6001
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
 

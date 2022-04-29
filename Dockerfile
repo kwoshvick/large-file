@@ -1,8 +1,5 @@
 FROM php:8.1-fpm
 
-# Copy composer.lock and composer.json
-#COPY composer.lock composer.json /var/www/
-
 # Set working directory
 WORKDIR /large-file
 
@@ -36,37 +33,16 @@ RUN docker-php-ext-install gd
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add user for laravel application
-#RUN groupadd -g 1000 www
-#RUN useradd -u 1000 -ms /bin/bash -g www www
-
-# Copy existing application directory contents
-#COPY composer.json composer.json
-#COPY composer.lock composer.lock
-#COPY composer.json composer.json
 
 
 COPY . .
+RUN cp docker/laravel/envs/env.dev ./.env
 RUN npm install
 RUN composer install --ignore-platform-reqs
 RUN composer dump-autoload
 
-#RUN php artisan key:generate
-#RUN php artisan jwt:secret
 RUN chmod 777 -R storage
 RUN chmod 777 -R public/uploads/csv
-
-
-#COPY . .
-#RUN composer install
-
-# Copy existing application directory permissions
-#COPY --chown=www:www . /var/www
-
-# Change current user to www
-#USER www
-
-#RUN php artisan passport:key
 
 
 # Expose port 9000 and start php-fpm server
