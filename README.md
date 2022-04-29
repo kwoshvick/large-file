@@ -12,9 +12,7 @@
     - `docker-compose up -d `
 - run migration
     - `docker exec large_file_backend_app php artisan migrate`
-- add queue
-    - `docker exec large_file_backend_app php artisan marvel-crawler --queued`
 - run queue worker
-    - `docker exec large_file_backend_app php artisan queue:work --timeout=1800`
+    - `docker exec large_file_backend_app php artisan queue:work`
 
 - Access the application via `{ip}:8010`
