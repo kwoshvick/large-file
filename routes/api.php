@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/csv-upload', [FileController::class, 'uploadCsv'])->name('csv-upload');
+Route::post('/', [FileController::class, 'index']);
 

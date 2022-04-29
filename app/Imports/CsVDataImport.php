@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\data;
+use App\Models\Data;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -13,7 +13,7 @@ class CsVDataImport implements ToModel, WithHeadingRow, WithChunkReading, WithBa
 {
     public function model(array $row)
     {
-        return new data([
+        return new Data([
             'invoice_no' =>$row['invoiceno'],
             'stock_code' =>$row['stockcode'],
             'description' =>$row['description'],

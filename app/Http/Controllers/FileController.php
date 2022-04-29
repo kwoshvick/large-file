@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadCsvRequest;
+use App\Models\Data;
 use App\Services\FileService;
 
 class FileController extends Controller
@@ -15,7 +16,7 @@ class FileController extends Controller
     }
 
     public function index(){
-        return view('uploader');
+        return Data::all();
     }
 
     public function uploadCsv(UploadCsvRequest $request){
